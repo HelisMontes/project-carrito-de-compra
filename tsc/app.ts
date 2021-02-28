@@ -48,6 +48,13 @@ const cargarData = () => {
 const cargarEventos = () => {
     // Dispara cuando se presiona "Agregar Carrito"
     variables.listaCursos.addEventListener('click', seleccionarCrusos);
+    // Eliminar un curso del carrito
+    variables.carrito.addEventListener('click', eliminarCursos)
+    // Vaciar el carrito
+    variables.btnVaciarCarrito.addEventListener('click', () => {
+        cursosCarrito = [];
+        vaciarCarrito();
+    })
 };
 
 const seleccionarCrusos = (e) => {
@@ -57,6 +64,18 @@ const seleccionarCrusos = (e) => {
         const curso = e.target.parentElement.parentElement;
         cursoSeleccionado(curso);
     }
+}
+
+const eliminarCursos = (e) => {
+    e.preventDefault();
+    if (e.target.classList.contains('borrar-curso')) {
+        const idCurso = e.target.getAttribute('data-id');
+
+        // Eliminar del arreglo del carrito
+        cursosCarrito = cursosCarrito.filter(curso => curso.id !== idCurso)
+        insterHTML_Cart();
+    } 
+
 }
 
 const cursoSeleccionado = (curso) =>{
@@ -104,8 +123,7 @@ const insterHTML_Cart = () => {
             <td>${cantidad} </td>
             <td>
                 <a href="#" class="borrar-curso" data-id="${id}">X</a>
-            </td>
-            
+            </td>  
         `;
         variables.listaCarrito.appendChild(row);
     })

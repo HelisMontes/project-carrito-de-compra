@@ -1,6 +1,6 @@
 System.register(["../tsc/data.js"], function (exports_1, context_1) {
     "use strict";
-    var data_js_1, variables, cursosCarrito, insertHTML, cargarData, cargarEventos, seleccionarCrusos, cursoSeleccionado, updateDataCart, insertDataCart, insterHTML_Cart, vaciarCarrito;
+    var data_js_1, variables, cursosCarrito, insertHTML, cargarData, cargarEventos, seleccionarCrusos, eliminarCursos, cursoSeleccionado, updateDataCart, insertDataCart, insterHTML_Cart, vaciarCarrito;
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
@@ -54,6 +54,13 @@ System.register(["../tsc/data.js"], function (exports_1, context_1) {
             cargarEventos = () => {
                 // Dispara cuando se presiona "Agregar Carrito"
                 variables.listaCursos.addEventListener('click', seleccionarCrusos);
+                // Eliminar un curso del carrito
+                variables.carrito.addEventListener('click', eliminarCursos);
+                // Vaciar el carrito
+                variables.btnVaciarCarrito.addEventListener('click', () => {
+                    cursosCarrito = [];
+                    vaciarCarrito();
+                });
             };
             seleccionarCrusos = (e) => {
                 e.preventDefault();
@@ -61,6 +68,15 @@ System.register(["../tsc/data.js"], function (exports_1, context_1) {
                 if (e.target.classList.contains('agregar-carrito')) {
                     const curso = e.target.parentElement.parentElement;
                     cursoSeleccionado(curso);
+                }
+            };
+            eliminarCursos = (e) => {
+                e.preventDefault();
+                if (e.target.classList.contains('borrar-curso')) {
+                    const idCurso = e.target.getAttribute('data-id');
+                    // Eliminar del arreglo del carrito
+                    cursosCarrito = cursosCarrito.filter(curso => curso.id !== idCurso);
+                    insterHTML_Cart();
                 }
             };
             cursoSeleccionado = (curso) => {
@@ -71,8 +87,7 @@ System.register(["../tsc/data.js"], function (exports_1, context_1) {
                     precio: curso.querySelector('.precio span').textContent.substr(1),
                     cantidad: 1
                 }; //Datos del curso actual
-                const existe = cursosCarrito.some(curso => curso.id === objCurso.id);
-                //Valido si existe el curso
+                const existe = cursosCarrito.some(curso => curso.id === objCurso.id); //Valido si existe el curso
                 existe ? updateDataCart(objCurso) : insertDataCart(objCurso);
             };
             updateDataCart = (objCurso) => {
@@ -107,8 +122,7 @@ System.register(["../tsc/data.js"], function (exports_1, context_1) {
             <td>${cantidad} </td>
             <td>
                 <a href="#" class="borrar-curso" data-id="${id}">X</a>
-            </td>
-            
+            </td>  
         `;
                     variables.listaCarrito.appendChild(row);
                 });

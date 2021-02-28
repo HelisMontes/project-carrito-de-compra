@@ -20,9 +20,18 @@ interface CarritoDeCompra{
     img:string,
     titulo:string,
     precio:number,
+    cantidad:number;
 };
 
 interface InsertHTML{
     (data:Data)
 }
-export{Variables, Data, CarritoDeCompra, InsertHTML};
+
+interface UpdateDataCart{
+    (data:CarritoDeCompra)
+}
+
+interface InsertDataCart{
+    (data:CarritoDeCompra)
+}
+export{Variables, Data, CarritoDeCompra, InsertHTML, UpdateDataCart, InsertDataCart};

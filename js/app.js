@@ -1,6 +1,6 @@
-System.register(["./data.js"], function (exports_1, context_1) {
+System.register(["../tsc/data.js"], function (exports_1, context_1) {
     "use strict";
-    var data_js_1, variables, insertHTML, cargarData;
+    var data_js_1, variables, cursosCarrito, insertHTML, cargarData, cargarEventos, seleccionarCrusos, cursoSeleccionado, updateDataCart, insertDataCart, insterHTML_Cart, vaciarCarrito;
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
@@ -15,6 +15,7 @@ System.register(["./data.js"], function (exports_1, context_1) {
                 btnVaciarCarrito: document.querySelector('#vaciar-carrito'),
                 listaCursos: document.querySelector('#lista-cursos')
             };
+            cursosCarrito = [];
             insertHTML = (data) => {
                 const { id, img, titulo, autor, calificacion, precio, preciofinal } = data;
                 const lastrow = variables.listaCursos.lastChild;
@@ -50,7 +51,77 @@ System.register(["./data.js"], function (exports_1, context_1) {
                     }
                 });
             };
+            cargarEventos = () => {
+                // Dispara cuando se presiona "Agregar Carrito"
+                variables.listaCursos.addEventListener('click', seleccionarCrusos);
+            };
+            seleccionarCrusos = (e) => {
+                e.preventDefault();
+                // Selecciona el objeto que acciona el evento click
+                if (e.target.classList.contains('agregar-carrito')) {
+                    const curso = e.target.parentElement.parentElement;
+                    cursoSeleccionado(curso);
+                }
+            };
+            cursoSeleccionado = (curso) => {
+                const objCurso = {
+                    id: curso.querySelector('a').getAttribute('data-id'),
+                    img: curso.querySelector('img').src,
+                    titulo: curso.querySelector('h4').textContent,
+                    precio: curso.querySelector('.precio span').textContent.substr(1),
+                    cantidad: 1
+                }; //Datos del curso actual
+                const existe = cursosCarrito.some(curso => curso.id === objCurso.id);
+                //Valido si existe el curso
+                existe ? updateDataCart(objCurso) : insertDataCart(objCurso);
+            };
+            updateDataCart = (objCurso) => {
+                const sumarCantidad = cursosCarrito.map(curso => {
+                    if (curso.id === objCurso.id) {
+                        curso.cantidad++;
+                        curso.precio = Number(curso.precio) + Number(objCurso.precio);
+                        return curso; //Retorna el Objeto actualizado
+                    }
+                    else {
+                        return curso; //Retorna los Objetos que no son actualizado
+                    }
+                });
+                cursosCarrito = [...sumarCantidad];
+                insterHTML_Cart();
+            };
+            insertDataCart = (objCurso) => {
+                cursosCarrito = [...cursosCarrito, objCurso];
+                insterHTML_Cart();
+            };
+            insterHTML_Cart = () => {
+                vaciarCarrito();
+                cursosCarrito.map(cursos => {
+                    const { img, titulo, precio, cantidad, id } = cursos;
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+            <td>  
+                <img src="${img}" width=100>
+            </td>
+            <td>${titulo}</td>
+            <td>$${precio}</td>
+            <td>${cantidad} </td>
+            <td>
+                <a href="#" class="borrar-curso" data-id="${id}">X</a>
+            </td>
+            
+        `;
+                    variables.listaCarrito.appendChild(row);
+                });
+            };
+            vaciarCarrito = () => {
+                // contenedorCarrito.innerHTML = ''; // forma lenta
+                // forma rapida (recomendada)
+                while (variables.listaCarrito.firstChild) {
+                    variables.listaCarrito.removeChild(variables.listaCarrito.firstChild);
+                }
+            };
             cargarData();
+            cargarEventos();
         }
     };
 });

@@ -1,4 +1,4 @@
-System.register(["../tsc/data.js"], function (exports_1, context_1) {
+System.register(["../js/data.js"], function (exports_1, context_1) {
     "use strict";
     var data_js_1, variables, cursosCarrito, insertHTML, cargarData, cargarEventos, seleccionarCrusos, eliminarCursos, cursoSeleccionado, updateDataCart, insertDataCart, insterHTML_Cart, vaciarCarrito;
     var __moduleName = context_1 && context_1.id;

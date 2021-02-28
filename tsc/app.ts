@@ -1,4 +1,4 @@
-import {data} from "../tsc/data.js";
+import {data} from "../js/data.js";
 import {Variables, Data, CarritoDeCompra, InsertHTML, InsertDataCart, UpdateDataCart} from "../tsc/interfaces.js";
 
 const variables:Variables ={

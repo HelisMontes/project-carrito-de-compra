@@ -1,0 +1,17 @@
+{
+  "name": "carrito-de-compra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "lite-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  },
+  "dependencies": {
+    "systemjs": "^6.8.3"
+  }
+}

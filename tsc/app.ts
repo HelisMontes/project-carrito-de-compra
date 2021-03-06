@@ -50,6 +50,11 @@ const cargarEventos = () => {
     variables.listaCursos.addEventListener('click', seleccionarCrusos);
     // Eliminar un curso del carrito
     variables.carrito.addEventListener('click', eliminarCursos)
+    //Cargar los cursos de localStorage
+    window.addEventListener("load", (event) => {
+        cursosCarrito = JSON.parse( localStorage.getItem('carrito')) || [] // Si no hay registro en localStorage asigno un registro vació
+        insterHTML_Cart();
+    });
     // Vaciar el carrito
     variables.btnVaciarCarrito.addEventListener('click', () => {
         cursosCarrito = [];
@@ -127,6 +132,11 @@ const insterHTML_Cart = () => {
         `;
         variables.listaCarrito.appendChild(row);
     })
+    syncStorage()
+}
+
+const syncStorage = () =>{
+    localStorage.setItem('carrito', JSON.stringify(cursosCarrito));
 }
 
 const vaciarCarrito = () =>{

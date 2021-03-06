@@ -1,6 +1,6 @@
 System.register(["../js/data.js"], function (exports_1, context_1) {
     "use strict";
-    var data_js_1, variables, cursosCarrito, insertHTML, cargarData, cargarEventos, seleccionarCrusos, eliminarCursos, cursoSeleccionado, updateDataCart, insertDataCart, insterHTML_Cart, vaciarCarrito;
+    var data_js_1, variables, cursosCarrito, insertHTML, cargarData, cargarEventos, seleccionarCrusos, eliminarCursos, cursoSeleccionado, updateDataCart, insertDataCart, insterHTML_Cart, syncStorage, vaciarCarrito;
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
@@ -56,6 +56,11 @@ System.register(["../js/data.js"], function (exports_1, context_1) {
                 variables.listaCursos.addEventListener('click', seleccionarCrusos);
                 // Eliminar un curso del carrito
                 variables.carrito.addEventListener('click', eliminarCursos);
+                //Cargar los cursos de localStorage
+                window.addEventListener("load", (event) => {
+                    cursosCarrito = JSON.parse(localStorage.getItem('carrito')) || []; // Si no hay registro en localStorage asigno un registro vació
+                    insterHTML_Cart();
+                });
                 // Vaciar el carrito
                 variables.btnVaciarCarrito.addEventListener('click', () => {
                     cursosCarrito = [];
@@ -126,6 +131,10 @@ System.register(["../js/data.js"], function (exports_1, context_1) {
         `;
                     variables.listaCarrito.appendChild(row);
                 });
+                syncStorage();
+            };
+            syncStorage = () => {
+                localStorage.setItem('carrito', JSON.stringify(cursosCarrito));
             };
             vaciarCarrito = () => {
                 // contenedorCarrito.innerHTML = ''; // forma lenta

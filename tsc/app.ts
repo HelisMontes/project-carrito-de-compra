@@ -30,15 +30,9 @@ const insertHTML:InsertHTML = ( data:Data ) => {
 
 const cargarData = () => {
        data.map((res, index)=>{
-        if(index == 0){
+        if(index % 3 == 0){
             variables.listaCursos.appendChild(document.createElement("DIV")).setAttribute("class", "row");
             insertHTML(res);
-        }
-        if(index % 3 == 0){
-            if(index > 1 ){
-                variables.listaCursos.appendChild(document.createElement("DIV")).setAttribute("class", "row");
-                insertHTML(res);
-            }
         }else {
             insertHTML(res);
         }

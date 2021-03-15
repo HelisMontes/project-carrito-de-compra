@@ -36,17 +36,10 @@ System.register(["../js/data.js"], function (exports_1, context_1) {
             };
             cargarData = () => {
                 data_js_1.data.map((res, index) => {
-                    if (index == 0) {
+                    if (index % 3 == 0) {
                         variables.listaCursos.appendChild(document.createElement("DIV")).setAttribute("class", "row");
                         insertHTML(res);
-                    }
-                    if (index % 3 == 0) {
-                        if (index > 1) {
-                            variables.listaCursos.appendChild(document.createElement("DIV")).setAttribute("class", "row");
-                            insertHTML(res);
-                        }
-                    }
-                    else {
+                    } else {
                         insertHTML(res);
                     }
                 });
